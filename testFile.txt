@@ -1,0 +1,12 @@
+What is a compiler? 
+What is computer science? 
+What is the definition of a test case? 
+What does it mean to be able to parse a string? 
+Why can't strings parse themselves? 
+What is a timer interrupt and what does it do? 
+How do you optimize a hash function? 
+Hash function 
+Compiler 
+Interrupt
+wat is teh best way to write progarm?
+
