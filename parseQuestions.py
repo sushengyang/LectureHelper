@@ -16,6 +16,7 @@ def processFile(filename):
 			
 		else:
 			tokens = nltk.word_tokenize(newLine) #breaks the sentence into a list of word strings
+			# remove doubles from each sentence
 			# check into Norvig spell checker!!
 			tagged = nltk.pos_tag(tokens) #breaks the sentence into a list of tuples--each element being a word and its part of speech 
 			for word in range(0, len(tagged)):
@@ -40,8 +41,6 @@ def wcDict(wordList):
 	if sortedList != []:
 		curr = sortedList[0]
 		wordcount = 1
-		#newtuple = sortedList[0], 1
-		#wordCountTuples.append(newtuple)
 	else:
 		return []
 
@@ -55,15 +54,71 @@ def wcDict(wordList):
 			wordcount = 1
 	
 	sortedWcTuples = sorted(wordCountTuples, key = getValue, reverse = True)
-	print sortedWcTuples
+	return sortedWcTuples
 	
 def getValue( tempTuple ):
 	return tempTuple[1]
 
+def findKeywords( sortedTuples, keywordNum ):
+	keywordList = []
+	if ( keywordNum > len(sortedTuples) ):
+		keywordNum = len(sortedTuples)
+	for i in range( 0, keywordNum ):
+		tempTuple = sortedTuples[i]
+		keywordList.append( tempTuple[0] )
+
+	return keywordList
+
+def findSent( filename, keywords):
+	unprocessedFile = open(filename, 'r') 
+	keepReading = 1
+	questionList = []
+	while keepReading==1: #while there is still stuff left in the file
+		newLine = unprocessedFile.readline()
+		newLine = newLine.lower()
+		if(newLine== ''): 
+			keepReading = 0; 
+			break
+			
+		else:
+			newLine = newLine.replace('\n', '')
+			count = 0
+			for i in range( 0, len(keywords) ) :
+				if ( newLine.find( keywords[i] ) ) != -1:
+					count = count + 1
+			
+			sent = newLine , count
+			questionList.append( sent )
+	popQuestionsTuples = sortQuestionList( questionList )
+	popQuestionsList = []
+	for i in range( 0, len(popQuestionsTuples )  ):
+		currTuple = popQuestionsTuples[i]
+		popQuestionsList.append( currTuple[0] )
+	return popQuestionsList
+				
+def sortQuestionList(questionList):
+	newQuestionList = sorted(questionList, key = getValue, reverse = True)
+	return newQuestionList
+
+def topSentences( sentList, numSent ):
+	if ( len( sentList) < numSent ):
+		numSent = len(sentList )
+
+	topSentList = []
+	for i in range( 0, numSent):
+		topSentList.append( sentList[i] )
+
+	return topSentList
+
+
 def main(): 
 	processed = processFile('testFile.txt')
 	trim = trimToWords(processed)
-	print wcDict( trim )
+	sortedTuples = wcDict( trim )
+	keywords = findKeywords( sortedTuples, 3 )
+	sortedSentences = findSent( 'testFile.txt', keywords)
+	popSentences = topSentences( sortedSentences, 4 )
+	print popSentences
 
 if __name__ == '__main__':
 	main()
