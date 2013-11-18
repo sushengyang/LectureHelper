@@ -1,30 +1,30 @@
 import sys
 import nltk 
-#download all nltk corpora on server 
+#download 'all' nltk corpora on server 
 
 def processFile(filename):
 	unprocessedFile = open(filename, 'r') 
-	keepReading = 1
+	keepReading = True
 	tagged = 'hello'
 	questionList = []
-	while keepReading==1: #while there is still stuff left in the file
+	while keepReading==True: #while there is still stuff left in the file
 		newLine = unprocessedFile.readline()
 		newLine = newLine.lower()
 		if(newLine== ''): 
-			keepReading = 0; 
+			keepReading = False; 
 			break
 			
 		else:
 			tokens = nltk.word_tokenize(newLine) #breaks the sentence into a list of word strings
 			# remove doubles from each sentence
-			# check into Norvig spell checker!!
+			# extended implementation: perhaps add a spell checker (Norvig) 
 			tagged = nltk.pos_tag(tokens) #breaks the sentence into a list of tuples--each element being a word and its part of speech 
 			for word in range(0, len(tagged)):
 				currTagged = tagged[word]
-				if currTagged[1] =='NN' or currTagged[1] == 'NNP' or currTagged[1]== 'NNPS': #keeing it a just nouns FOR NAO
+				if currTagged[1] =='NN' or currTagged[1] == 'NNP' or currTagged[1]== 'NNPS': #tags are just nouns for the time being
 					questionList.append(currTagged) 
 			
-	 #if sentence length is one or two words long, append full sentence 
+	 #extended implementation: if sentence length is one or two words long, append full sentence 
 	return questionList
 def trimToWords(qList):
 	tupleList = qList
@@ -71,13 +71,13 @@ def findKeywords( sortedTuples, keywordNum ):
 
 def findSent( filename, keywords):
 	unprocessedFile = open(filename, 'r') 
-	keepReading = 1
+	keepReading = True
 	questionList = []
-	while keepReading==1: #while there is still stuff left in the file
+	while keepReading==True: #while there is still stuff left in the file
 		newLine = unprocessedFile.readline()
 		newLine = newLine.lower()
 		if(newLine== ''): 
-			keepReading = 0; 
+			keepReading = False; 
 			break
 			
 		else:
