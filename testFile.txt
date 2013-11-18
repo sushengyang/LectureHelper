@@ -1,8 +1,10 @@
 What is a compiler? 
 What is computer science? 
 What is the definition of a test case? 
-What does it mean to be able to parse a string? 
-Why can't strings parse themselves? 
+What is the height of an empty tree? 
+Waht is a hash function? 
+What is a collision in the context of hash functions? 
+What is a string? 
 What is a timer interrupt and what does it do? 
 How do you optimize a hash function? 
 Hash function 
